@@ -8,6 +8,7 @@ require('dotenv').config()
 
 module.exports = {
   signUp: function(req, res) {
+    console.log(req.body);
     const saltRounds = 10;
     let pass = bcrypt.hashSync(req.body.password, saltRounds);
 
@@ -29,11 +30,12 @@ module.exports = {
   },
   signIn: function(req, res) {
     users
-      .findOne({ username: req.body.username})
+      .findOne({ username: req.body.email})
       .then(user => {
         if(bcrypt.compareSync(req.body.password, user.password)){
-          let token = jwt.sign({ id: user.id, role: user.username, name: user.name}, process.env.SECRET)
+          let token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET)
           // req.headers.token = token;
+          
         }
         // res.json(req.headers.token)
         // res.json(user.id)

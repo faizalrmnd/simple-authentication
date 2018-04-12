@@ -4,12 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 
 const app = express();
+app.use(cors())
 
-mongoose.connect('mongodb://localhost/authlivecode');
+mongoose.connect('mongodb://localhost:27017/authlivecode');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
